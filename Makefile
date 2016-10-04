@@ -1,12 +1,10 @@
-echo $(KBUILD_EXTMOD)
-echo $(KBUILD_MODULES)
-
 ifeq ($(KBUILD_MODULES), 1)
-obj-y += bhfs.o
+obj-m += bhfs.o
 bhfs-objs += super.o
 else
-knl_src=$(HOME)/code/linux
-cur_src=$(shell pwd)
+knl_src := /lib/modules/$(shell uname -r)/build
+cur_src := $(shell pwd)
+
 .PHONE : all clean install
 all :
 	make -C $(knl_src) M=$(cur_src) modules

@@ -9,6 +9,7 @@
 #include <linux/slab.h>
 #include <linux/sched.h>
 #include <linux/time.h>
+#include <linux/pagemap.h>
 
 #define BHFS_MAGIC 0x62686673
 
@@ -59,8 +60,8 @@ static ssize_t bhfs_read_iter(struct kiocb *iocb, struct iov_iter *iter)
     ret = 0;
     read_cnt = 0;
     while (iov_iter_count(iter)) {
-        size chunk = iov_iter_count(iter);
-        size n;
+        size_t chunk = iov_iter_count(iter);
+        size_t n;
 
         if (PAGE_SIZE < chunk) {
             chunk = PAGE_SIZE;
